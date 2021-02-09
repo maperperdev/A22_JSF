@@ -1,30 +1,41 @@
 package ejb;
 
-import javax.ejb.Local;
-import javax.ejb.LocalBean;
+import java.util.List;
+
+import javax.annotation.PreDestroy;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
-/**
- * Session Bean implementation class CategoriaFacadeImpl
- */
+import modelo.Categoria;
+
 @Stateless
-@Local(AbstractFacadeJPA.class)
-@LocalBean
-public class CategoriaFacadeImpl extends AbstractFacadeJPAImpl implements AbstractFacadeJPA {
+public class CategoriaFacadeImpl extends AbstractFacadeJPAImpl<Categoria> implements CategoriaFacade{
+	
+	@PersistenceContext(unitName = "Persistencia")
+	private EntityManager em;
+	
+	
+	public CategoriaFacadeImpl() {
+		super(Categoria.class);
+	}
 
-    /**
-     * Default constructor. 
-     */
-    public CategoriaFacadeImpl() {
-        // TODO Auto-generated constructor stub
+	@PreDestroy
+    public void destruct() {
+        getEm().close();
     }
-       
-    /**
-     * @see AbstractFacadeJPAImpl#AbstractFacadeJPAImpl(Class<T>)
-     */
-    public CategoriaFacadeImpl(Class<T> entityClass) {
-        super(entityClass);
-        // TODO Auto-generated constructor stub
-    }
+
+	@Override
+	public List<Categoria> findAll() {
+		TypedQuery<Categoria> q=getEm().createQuery("select c from categoria c", Categoria.class);
+		List<Categoria> lista=q.getResultList();
+		return lista;
+	}
+
+	@Override
+	protected EntityManager getEm() {
+		return em;
+	}
 
 }

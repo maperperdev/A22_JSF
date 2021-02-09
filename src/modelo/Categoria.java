@@ -1,52 +1,78 @@
 package modelo;
 
 import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
+/**
+ * The persistent class for the categoria database table.
+ * 
+ */
 @Entity
 @Table(name="categoria")
+@NamedQuery(name="Categoria.findAll", query="SELECT c FROM Categoria c")
 public class Categoria implements Serializable {
-	
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer codigo;
-	
-	@Column(name="nombre")
-	private String nombre;
-	
-	@Column(name="estado")
-	private Boolean estado = true;
+	private int codigo;
 
-	public Categoria() {	}
-	public Integer getCodigo() {
-		return codigo;
+	private byte estado;
+
+	private String nombre;
+
+	//bi-directional many-to-one association to Nota
+	@OneToMany(mappedBy="categoria")
+	private List<Nota> notas;
+
+	public Categoria() {
 	}
-	public void setCodigo(Integer codigo) {
+
+	public int getCodigo() {
+		return this.codigo;
+	}
+
+	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
 
+	public byte getEstado() {
+		return this.estado;
+	}
+
+	public void setEstado(byte estado) {
+		this.estado = estado;
+	}
+
 	public String getNombre() {
-		return nombre;
+		return this.nombre;
 	}
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
 
-	public Boolean getEstado() {
-		return estado;
+	public List<Nota> getNotas() {
+		return this.notas;
 	}
 
-	public void setEstado(Boolean estado) {
-		this.estado = estado;
+	public void setNotas(List<Nota> notas) {
+		this.notas = notas;
+	}
+
+	public Nota addNota(Nota nota) {
+		getNotas().add(nota);
+		nota.setCategoria(this);
+
+		return nota;
+	}
+
+	public Nota removeNota(Nota nota) {
+		getNotas().remove(nota);
+		nota.setCategoria(null);
+
+		return nota;
 	}
 
 }

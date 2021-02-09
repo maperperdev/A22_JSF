@@ -5,6 +5,11 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	<persistence-unit name="Persistencia" transaction-type="JTA">
 		<jta-data-source>jdbc/A22_JSF</jta-data-source>
 		<class>modelo.Categoria</class>
+		<class>modelo.Menu</class>
+		<class>modelo.Nota</class>
+		<class>modelo.Persona</class>
+		<class>modelo.Telefono</class>
+		<class>modelo.Usuario</class>
 		<properties>
 			<property name="javax.persistence.schema-generation.database.action" value="none" />
 			

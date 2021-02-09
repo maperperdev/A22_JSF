@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<h:outputScript library="js" name="spanishLocale.js"/>
+</h:head>
+<h:body>
+	<h:form>
+		<p:messages id="mensaje"/>
+		<p:fieldset legend="Datos Personales">
+		<h:panelGrid columns="3" id="pgDatos">
+			<p:outputLabel value="Nombre" for="txtNombre"/>
+			<p:inputText id="txtNombre" value="#{usuarioController.persona.nombre}" required="true" label="Rellene el nombre"/>
+			<p:message for="txtNombre"/>
+			
+			<p:outputLabel value="Apellidos" for="txtApellidos"/>
+			<p:inputText id="txtApellidos" value="#{usuarioController.persona.apellidos}" required="true" label="Rellene los apellidos"/>
+			<p:message for="txtApellidos"/>
+			
+			<p:outputLabel for="txtSexo" value="Sexo"/>
+			<p:selectOneRadio id="txtSexo" value="#{usuarioController.persona.sexo}" required="true" label="Seleccione un sexo">
+				<f:selectItem itemValue="M" itemLabel="MASCULINO"/>
+				<f:selectItem itemValue="F" itemLabel="FEMENINO"/>
+			</p:selectOneRadio>
+			<p:message for="txtSexo"/>
+			
+			<p:outputLabel for="txtFechaNacimiento" value="Fecha Nacimiento" />
+			<p:calendar id="txtFechaNacimiento" locale="es" value="#{usuarioController.persona.fechaNacimiento}" required="true" label="Rellene la fecha de nacimiento"></p:calendar>
+			<p:message for="txtFechaNacimiento"/>
+		</h:panelGrid>
+		<p:commandButton icon="ui-icon-check" value="Registrar" update="mensaje, pgDatos, pgCuenta"/>
+		</p:fieldset>
+		
+		<p:fieldset legend="Datos de la cuenta">
+		<h:panelGrid columns="3" id="pgCuenta">
+			<p:outputLabel for="txtUsuario" value="Usuario" />
+			<p:inputText id="txtUsuario" required="true" label="Rellene el usuario" value="#{usuarioController.usuario.usuario}"/>
+			<p:message for="txtUsuario"/>
+			suario
+			<p:outputLabel for="clave1" value="Clave"/>
+			<p:password id="clave1" value="#{usuarioController.usuario.clave}" required="true" label="Rellene la clave"
+			validatorMessage="Las claves no coinciden" weakLabel="Una mierda de clave que me llevas" strongLabel="Fuerte como el vinagre" match="clave2" 
+			feedback="true" promptLabel="Escriba una clave"/>
+			<p:message for="clave1"/>
+			
+			<p:outputLabel for="clave2" value="Repetir Clave"/>
+			<p:password id="clave2" value="#{usuarioController.usuario.clave}" required="true" label="Repita la clave"/>
+			<p:message for="clave2"/>
+			
+		</h:panelGrid>
+		</p:fieldset>
+	</h:form>
+</h:body>
+</html>

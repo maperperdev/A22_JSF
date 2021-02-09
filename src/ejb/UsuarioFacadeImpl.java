@@ -15,7 +15,7 @@ import modelo.Usuario;
  * Session Bean implementation class UsuarioFacadeImpl
  */
 @Stateless
-public class UsuarioFacadeImpl extends AbstractFacadeJPAImpl<Usuario> implements UsuarioFacade {
+public class UsuarioFacadeImpl extends AbstractFacadeJPAImpl<Usuario> implements UsuarioFacade2 {
 
 	 @PersistenceContext(unitName="Persistencia")
 	 private EntityManager em;
