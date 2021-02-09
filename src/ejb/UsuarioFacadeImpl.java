@@ -8,6 +8,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import modelo.Usuario;
 
@@ -43,7 +44,7 @@ public class UsuarioFacadeImpl extends AbstractFacadeJPAImpl<Usuario> implements
 			String consulta;
 			try {
 				consulta="SELECT u FROM Usuario u WHERE u.usuario= :usuario AND u.clave= :clave";
-				Query query=em.createQuery(consulta);
+				TypedQuery<Usuario> query=em.createQuery(consulta, Usuario.class);
 				query.setParameter("usuario", us.getUsuario());
 				query.setParameter("clave", us.getClave());
 				List<Usuario> lista=query.getResultList();
