@@ -1,0 +1,121 @@
+package modelo;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the menu database table.
+ * 
+ */
+@Entity
+@Table(name="menu")
+@NamedQuery(name="Menu.findAll", query="SELECT m FROM Menu m")
+public class MenuAntiguo implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	private Integer codigo;
+
+	private boolean estado;
+
+	private String nombre;
+
+	private String tipo;
+
+	private String tipoUsuario;
+
+	private String url;
+
+	//bi-directional many-to-one association to Menu
+	@ManyToOne
+	@JoinColumn(name="codigo_submenu")
+	private MenuAntiguo menu;
+
+	//bi-directional many-to-one association to Menu
+	@OneToMany(mappedBy="menu")
+	private List<MenuAntiguo> menus;
+
+	public MenuAntiguo() {
+	}
+
+	public Integer getCodigo() {
+		return this.codigo;
+	}
+
+	public void setCodigo(Integer codigo) {
+		this.codigo = codigo;
+	}
+
+	public boolean getEstado() {
+		return this.estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+
+	public String getNombre() {
+		return this.nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getTipo() {
+		return this.tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getTipoUsuario() {
+		return this.tipoUsuario;
+	}
+
+	public void setTipoUsuario(String tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
+
+	public String getUrl() {
+		return this.url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public MenuAntiguo getMenu() {
+		return this.menu;
+	}
+
+	public void setMenu(MenuAntiguo menu) {
+		this.menu = menu;
+	}
+
+	public List<MenuAntiguo> getMenus() {
+		return this.menus;
+	}
+
+	public void setMenus(List<MenuAntiguo> menus) {
+		this.menus = menus;
+	}
+
+	public MenuAntiguo addMenus(MenuAntiguo menus) {
+		getMenus().add(menus);
+		menus.setMenu(this);
+
+		return menus;
+	}
+
+	public MenuAntiguo removeMenus(MenuAntiguo menus) {
+		getMenus().remove(menus);
+		menus.setMenu(null);
+
+		return menus;
+	}
+
+}

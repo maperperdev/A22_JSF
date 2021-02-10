@@ -12,8 +12,8 @@ import javax.inject.Named;
 
 
 
-import ejb.UsuarioFacade;
-
+//import ejb.UsuarioFacade;
+import ejb.UsuarioFacade2;
 import modelo.Usuario;
 //importante: hacer serializable el managed bean
 @Named
@@ -28,7 +28,7 @@ public class IndexController implements Serializable{
 	
 	
 	@EJB
-	private UsuarioFacade usuarioEJB;
+	private UsuarioFacade2 usuarioEJB;
 	
 
 

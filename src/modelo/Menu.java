@@ -1,63 +1,48 @@
 package modelo;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.util.List;
 
-
-/**
- * The persistent class for the menu database table.
- * 
- */
 @Entity
 @Table(name="menu")
-@NamedQuery(name="Menu.findAll", query="SELECT m FROM Menu m")
 public class Menu implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@Id
 	private Integer codigo;
-
-	private boolean estado;
-
+	
+	@Column(name="nombre")
 	private String nombre;
-
-	private String tipo;
-
-	private String tipoUsuario;
-
+	
+	@Column(name="url")
 	private String url;
-
-	//bi-directional many-to-one association to Menu
+	
+	@Column(name="tipo")
+	private String tipo;
+	
+	
+	
+	@Column(name="tipoUsuario")
+	private String tipoUsuario;
+	
+	//un codigo_submenu es el menu al que pertenece. PEj Nuevo y Buscar pertenecen al submenu de Notas
 	@ManyToOne
 	@JoinColumn(name="codigo_submenu")
-	private Menu menu;
-
-	//bi-directional many-to-one association to Menu
-	@OneToMany(mappedBy="menu")
-	private List<Menu> menus;
-
-	public Menu() {
-	}
+	private Menu submenu;
+	
+	@Column(name="estado")
+	private boolean estado=true;
 
 	public Integer getCodigo() {
-		return this.codigo;
+		return codigo;
 	}
 
 	public void setCodigo(Integer codigo) {
 		this.codigo = codigo;
 	}
 
-	public boolean getEstado() {
-		return this.estado;
-	}
-
-	public void setEstado(boolean estado) {
-		this.estado = estado;
-	}
-
 	public String getNombre() {
-		return this.nombre;
+		return nombre;
 	}
 
 	public void setNombre(String nombre) {
@@ -65,7 +50,7 @@ public class Menu implements Serializable {
 	}
 
 	public String getTipo() {
-		return this.tipo;
+		return tipo;
 	}
 
 	public void setTipo(String tipo) {
@@ -73,49 +58,43 @@ public class Menu implements Serializable {
 	}
 
 	public String getTipoUsuario() {
-		return this.tipoUsuario;
+		return tipoUsuario;
 	}
 
 	public void setTipoUsuario(String tipoUsuario) {
 		this.tipoUsuario = tipoUsuario;
 	}
 
+	public Menu getSubmenu() {
+		return submenu;
+	}
+
+	public void setSubmenu(Menu submenu) {
+		this.submenu = submenu;
+	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+
+	@Override
+	public String toString() {
+		return "Menu [codigo=" + codigo + ", nombre=" + nombre + "]";
+	}
+
 	public String getUrl() {
-		return this.url;
+		return url;
 	}
 
 	public void setUrl(String url) {
 		this.url = url;
 	}
-
-	public Menu getMenu() {
-		return this.menu;
-	}
-
-	public void setMenu(Menu menu) {
-		this.menu = menu;
-	}
-
-	public List<Menu> getMenus() {
-		return this.menus;
-	}
-
-	public void setMenus(List<Menu> menus) {
-		this.menus = menus;
-	}
-
-	public Menu addMenus(Menu menus) {
-		getMenus().add(menus);
-		menus.setMenu(this);
-
-		return menus;
-	}
-
-	public Menu removeMenus(Menu menus) {
-		getMenus().remove(menus);
-		menus.setMenu(null);
-
-		return menus;
-	}
-
+	
+	
+	
+	
 }
